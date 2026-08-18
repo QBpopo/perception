@@ -21,6 +21,8 @@ export class UnitVec2 implements Vec2 {
 	}
 }
 
+export const Vec2 = (v: Vec2): Vec2 => vec2(v.x, v.y);
+
 export const vec2 = (x: number, y: number): Vec2 => ({ x, y });
 
 export const zero = () => vec2(0, 0);
