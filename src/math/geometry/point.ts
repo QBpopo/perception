@@ -17,9 +17,7 @@ export class Point implements BoundedGeometry, PointLike {
 		this.y = point.y;
 	}
 
-	static zero(): Point {
-		return new Point();
-	}
+	static zero = (): Point => new Point();
 
 	static point = (x: number, y: number): Point => new Point({ x, y });
 
