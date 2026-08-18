@@ -19,6 +19,14 @@
 		"noUnusedParameters": true,
 		"erasableSyntaxOnly": true,
 		"noFallthroughCasesInSwitch": true,
+
+		"paths": {
+			"@/types": [ "./src/types.ts" ],
+			"@/math": [ "./src/math/math.ts" ],
+			"@/math/*": [ "./src/math/*.ts" ],
+			"@/geometry": [ "./src/math/geometry/geometry.ts" ],
+			"@/geometry/*": [ "./src/math/geometry/*.ts" ],
+		}
 	},
 	"include": [ "src" ]
 }
