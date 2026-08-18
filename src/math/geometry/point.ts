@@ -21,7 +21,7 @@ export class Point implements BoundedGeometry, PointLike {
 		return new Point();
 	}
 
-	static from_xy = (x: number, y: number): Point => new Point({ x, y });
+	static point = (x: number, y: number): Point => new Point({ x, y });
 
 	static distance = (a: DeepReadonly<PointLike>, b: DeepReadonly<PointLike>): number => {
 		const dx = a.x - b.x;
@@ -36,6 +36,6 @@ export class Point implements BoundedGeometry, PointLike {
 	};
 
 	static offset = (o: DeepReadonly<Point>, dir: DeepReadonly<Vec2>, t: number): Point => {
-		return Point.from_xy(o.x + t * dir.x, o.y + t * dir.y);
+		return Point.point(o.x + t * dir.x, o.y + t * dir.y);
 	};
 }
