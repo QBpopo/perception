@@ -1,6 +1,6 @@
 import type { DeepReadonly } from "@/types";
 import type { Vec2 } from "@/math/vector";
-import type { BoundedGeometry, Dimension } from "@/geometry";
+import type { BoundedGeometry } from "@/geometry";
 
 export interface PointLike {
 	x: number;
@@ -37,7 +37,7 @@ export class Point implements BoundedGeometry, PointLike {
 		return Point.point(o.x + t * dir.x, o.y + t * dir.y);
 	};
 
-	get dimension(): Dimension {
+	get dimension(): 0 {
 		return 0;
 	}
 }

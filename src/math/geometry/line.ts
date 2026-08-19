@@ -1,5 +1,5 @@
 import * as Vec from "@/math/vector";
-import type { Geometry, Dimension } from "@/geometry";
+import type { Geometry } from "@/geometry";
 import { Point } from "@/geometry";
 
 export interface LineLike {
@@ -18,7 +18,7 @@ export class Line implements Geometry, LineLike {
 		if (direction !== undefined) this.direction = Vec.Vec2(direction);
 	}
 
-	get dimension(): Dimension {
-		return Vec.len_sq(this.direction) === 0 ? 0 : 1;
+	get dimension(): 0 | 1 {
+		return Vec.is_zero(this.direction) ? 0 : 1;
 	}
 }

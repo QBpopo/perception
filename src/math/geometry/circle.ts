@@ -1,5 +1,5 @@
 import type { DeepReadonly, Values } from "@/types";
-import type { BoundedGeometry, Dimension } from "@/geometry";
+import type { BoundedGeometry } from "@/geometry";
 import { Point } from "@/geometry";
 
 export interface CircleLike {
@@ -54,7 +54,7 @@ export class Circle implements BoundedGeometry, CircleLike {
 		return CircleRelation.Intersecting;
 	};
 
-	get dimension(): Dimension {
+	get dimension(): 0 | 2 {
 		return this.radius === 0 ? 0 : 2;
 	}
 }
