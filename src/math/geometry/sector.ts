@@ -2,7 +2,7 @@ import type { DeepReadonly } from "@/types";
 import { TWO_PI, clamp } from "@/math";
 import * as Vec from "@/math/vector";
 import type { BoundedGeometry, Dimension, PointLike } from "@/geometry";
-import { Point, Relation } from "@/geometry";
+import { Point, Relation, Aabb } from "@/geometry";
 
 export interface SectorLike {
 	center: Point;
@@ -125,5 +125,25 @@ export class Sector implements BoundedGeometry, SectorLike {
 			new Point(this.left_endpoint),
 			new Point(this.right_endpoint),
 		];
+	}
+
+	aabb(): Aabb {
+		const { x: cx, y: cy } = this.center;
+		const { x: dx, y: dy } = this.direction;
+		const r = this.radius;
+		const cos_half = Math.cos(this.angle / 2);
+
+		const pts: Point[] = [
+			this.center,
+			this.left_endpoint,
+			this.right_endpoint,
+		];
+
+		if (dx >= cos_half) pts.push(Point.point(cx + r, cy));
+		if (-dx >= cos_half) pts.push(Point.point(cx - r, cy));
+		if (dy >= cos_half) pts.push(Point.point(cx, cy + r));
+		if (-dy >= cos_half) pts.push(Point.point(cx, cy - r));
+
+		return Aabb.from_points(pts);
 	}
 }

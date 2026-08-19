@@ -1,7 +1,7 @@
 import type { DeepReadonly } from "@/types";
 import type { Vec2 } from "@/math/vector";
 import type { BoundedGeometry } from "@/geometry";
-import { Relation } from "@/geometry";
+import { Relation, Aabb } from "@/geometry";
 
 export interface PointLike {
 	x: number;
@@ -56,5 +56,12 @@ export class Point implements BoundedGeometry, PointLike {
 
 	non_smooth(): Iterable<Point> {
 		return [new Point(this)];
+	}
+
+	aabb(): Aabb {
+		return new Aabb({
+			min: new Point(this),
+			max: new Point(this),
+		});
 	}
 }

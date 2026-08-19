@@ -91,4 +91,11 @@ export class Aabb implements BoundedGeometry, AabbLike {
 			Point.point(this.max.x, this.max.y),
 		];
 	}
+
+	aabb(): Aabb {
+		return new Aabb({
+			min: new Point(this.min),
+			max: new Point(this.max),
+		});
+	}
 }

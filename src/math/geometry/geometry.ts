@@ -1,5 +1,6 @@
 import type { Values, DeepReadonly } from "@/types";
 import type { Point, PointLike } from "@/geometry/point";
+import type { Aabb } from "@/geometry/aabb";
 
 export * from "@/geometry/point";
 export * from "@/geometry/circle";
@@ -24,7 +25,9 @@ export interface Geometry {
 	non_smooth(): Iterable<Point>;
 }
 
-export interface BoundedGeometry extends Geometry { }
+export interface BoundedGeometry extends Geometry {
+	aabb(): Aabb;
+}
 
 export type Dimension = 0 | 1 | 2;
 

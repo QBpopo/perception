@@ -1,7 +1,7 @@
 import type { DeepReadonly, Values } from "@/types";
 import * as Vec from "@/math/vector";
 import type { BoundedGeometry, PointLike } from "@/geometry";
-import { Point, Relation } from "@/geometry";
+import { Point, Relation, Aabb } from "@/geometry";
 
 export interface CircleLike {
 	center: Point;
@@ -80,6 +80,13 @@ export class Circle implements BoundedGeometry, CircleLike {
 
 	non_smooth(): Iterable<Point> {
 		return [];
+	}
+
+	aabb(): Aabb {
+		return new Aabb({
+			min: Point.point(this.center.x - this.radius, this.center.y - this.radius),
+			max: Point.point(this.center.x + this.radius, this.center.y + this.radius),
+		});
 	}
 }
 

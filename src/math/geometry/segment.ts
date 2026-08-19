@@ -2,7 +2,7 @@ import type { DeepReadonly } from "@/types";
 import { clamp } from "@/math";
 import type { BoundedGeometry, PointLike } from "@/geometry";
 import * as Vec from "@/math/vector";
-import { Point, Relation } from "@/geometry";
+import { Point, Relation, Aabb } from "@/geometry";
 
 export interface SegmentLike {
 	start: Point;
@@ -63,5 +63,9 @@ export class Segment implements BoundedGeometry, SegmentLike {
 			new Point(this.start),
 			new Point(this.end),
 		];
+	}
+
+	aabb(): Aabb {
+		return Aabb.from_points([this.start, this.end]);
 	}
 }

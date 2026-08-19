@@ -1,7 +1,7 @@
 import type { DeepReadonly } from "@/types";
 import * as Vec from "@/math/vector";
 import type { BoundedGeometry, Dimension, PointLike } from "@/geometry";
-import { Point, Segment, Relation } from "@/geometry";
+import { Point, Segment, Relation, Aabb } from "@/geometry";
 
 export interface PolygonLike {
 	vertices: Point[];
@@ -149,5 +149,9 @@ export class Polygon implements BoundedGeometry, PolygonLike {
 
 	non_smooth(): Iterable<Point> {
 		return this.vertices.map(v => new Point(v));
+	}
+
+	aabb(): Aabb {
+		return Aabb.from_points(this.vertices);
 	}
 }
