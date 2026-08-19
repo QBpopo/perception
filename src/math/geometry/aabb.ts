@@ -16,6 +16,9 @@ export class Aabb implements BoundedGeometry, AabbLike {
 		const { min, max } = aabb;
 		if (min !== undefined) this.min = new Point(min);
 		if (max !== undefined) this.max = new Point(max);
+		if (this.min.x > this.max.x || this.min.y > this.max.y) {
+			[this.min, this.max] = [this.max, this.min];
+		}
 	}
 
 	static from_points = (ps: Iterable<Point>): Aabb => {
