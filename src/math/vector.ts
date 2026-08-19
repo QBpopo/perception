@@ -39,6 +39,8 @@ export const len = (v: DeepReadonly<Vec2>): number => Math.hypot(v.x, v.y);
 
 export const len_sq = (v: DeepReadonly<Vec2>): number => v.x * v.x + v.y * v.y;
 
+export const angle = (v: DeepReadonly<Vec2>): number => Math.atan2(v.y, v.x);
+
 export const translate = (v: DeepReadonly<Vec2>, t: DeepReadonly<Vec2>): Vec2 => vec2(v.x + t.x, v.y + t.y);
 
 // 顺时针旋转
