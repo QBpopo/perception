@@ -18,9 +18,13 @@ export class Circle implements BoundedGeometry, CircleLike {
 		if (radius !== undefined) this.#radius = radius;
 	}
 
-	get radius(): number { return this.#radius; }
+	get radius(): number {
+		return this.#radius;
+	}
 
-	set radius(r: number) { this.#radius = Math.max(0, r); }
+	set radius(r: number) {
+		this.#radius = Math.max(0, r);
+	}
 
 	static circle_relation = (c1: DeepReadonly<CircleLike>, c2: DeepReadonly<CircleLike>): CircleRelation => {
 		const d = Point.distance(c1.center, c2.center);
