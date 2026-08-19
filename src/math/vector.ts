@@ -33,6 +33,8 @@ export const dir = (from: DeepReadonly<PointLike>, to: DeepReadonly<PointLike>):
 	return { x, y };
 };
 
+export const is_zero = (v: DeepReadonly<Vec2>): boolean => len_sq(v) === 0;
+
 export const len = (v: DeepReadonly<Vec2>): number => Math.hypot(v.x, v.y);
 
 export const len_sq = (v: DeepReadonly<Vec2>): number => v.x * v.x + v.y * v.y;

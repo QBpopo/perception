@@ -57,6 +57,12 @@ export class Sector implements BoundedGeometry, SectorLike {
 		if (this.radius === 0) {
 			return 0;
 		}
-		return this.angle === 0 ? 1 : 2;
+		if (Vec.is_zero(this.direction)) {
+			return 0;
+		}
+		if (this.angle === 0) {
+			return 1;
+		}
+		return 2;
 	}
 }
