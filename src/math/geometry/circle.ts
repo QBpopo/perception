@@ -15,7 +15,7 @@ export class Circle implements BoundedGeometry, CircleLike {
 		if (!circle) return;
 		const { center, radius } = circle;
 		if (center !== undefined) this.center = new Point(center);
-		if (radius !== undefined) this.#radius = radius;
+		if (radius !== undefined) this.radius = radius;
 	}
 
 	get radius(): number {
