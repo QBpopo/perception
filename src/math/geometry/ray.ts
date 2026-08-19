@@ -34,4 +34,10 @@ export class Ray implements Geometry, RayLike {
 			return Relation.Disjoint;
 		}
 	}
+
+	closest(p: DeepReadonly<PointLike>): Point {
+		const op = Vec.dir(this.origin, p);
+		const t = Math.max(0, Vec.proj_factor(op, this.direction));
+		return Point.offset(this.origin, this.direction, t);
+	}
 }

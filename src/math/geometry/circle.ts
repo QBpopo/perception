@@ -1,4 +1,5 @@
 import type { DeepReadonly, Values } from "@/types";
+import * as Vec from "@/math/vector";
 import type { BoundedGeometry, PointLike } from "@/geometry";
 import { Point, Relation } from "@/geometry";
 
@@ -62,6 +63,19 @@ export class Circle implements BoundedGeometry, CircleLike {
 		const d_sq = Point.distance_sq(this.center, p);
 		const r_sq = this.radius ** 2;
 		return d_sq <= r_sq ? Relation.Intersects : Relation.Disjoint;
+	}
+
+	closest(p: DeepReadonly<PointLike>): Point {
+		const cp = Vec.dir(this.center, p);
+		const d = Vec.len(cp);
+
+		// 最近点即自身
+		if (d <= this.radius) {
+			return new Point(p);
+		}
+
+		// 在圆外，沿圆心到点方向偏移半径
+		return Point.offset(this.center, Vec.scale(cp, d), this.radius);
 	}
 }
 

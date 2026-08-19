@@ -86,4 +86,36 @@ export class Sector implements BoundedGeometry, SectorLike {
 		const cos_half = Math.cos(half);
 		return Vec.cos_theta(cp, this.direction) >= cos_half ? Relation.Intersects : Relation.Disjoint;
 	}
+
+	closest(p: DeepReadonly<PointLike>): Point {
+		// 在扇形内，最近点即自身
+		if (this.relation(p) !== Relation.Disjoint) {
+			return new Point(p);
+		}
+
+		const r = this.radius;
+		const cp = Vec.dir(this.center, p);
+
+		// 在角度范围内，在弧上
+		const half = this.angle / 2;
+		if (Vec.cos_theta(this.direction, cp) >= Math.cos(half)) {
+			return Point.offset(this.center, Vec.normalize(cp), r);
+		}
+
+		// 在角度范围外，在直边上
+		const left = Vec.rotate(this.direction, half);
+		const right = Vec.rotate(this.direction, -half);
+
+		const tl = clamp(Vec.proj_factor(cp, left), 0, r);
+		const tr = clamp(Vec.proj_factor(cp, right), 0, r);
+
+		const left_closest = Point.offset(this.center, left, tl);
+		const right_closest = Point.offset(this.center, right, tr);
+
+		if (Vec.len_sq(Vec.dir(p, left_closest)) <= Vec.len_sq(Vec.dir(p, right_closest))) {
+			return left_closest;
+		} else {
+			return right_closest;
+		}
+	}
 }

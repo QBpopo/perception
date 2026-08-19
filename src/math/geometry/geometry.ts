@@ -1,5 +1,5 @@
 import type { Values, DeepReadonly } from "@/types";
-import type { PointLike } from "@/geometry/point";
+import type { Point, PointLike } from "@/geometry/point";
 
 export * from "@/geometry/point";
 export * from "@/geometry/circle";
@@ -16,6 +16,9 @@ export interface Geometry {
 
 	// 点与 geometry 的位置关系
 	relation(p: DeepReadonly<PointLike>): Relation;
+
+	// geometry 上与该点最近的点
+	closest(p: DeepReadonly<PointLike>): Point;
 }
 
 export interface BoundedGeometry extends Geometry { }

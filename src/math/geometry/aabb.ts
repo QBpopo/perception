@@ -1,4 +1,5 @@
 import type { DeepReadonly } from "@/types";
+import { clamp } from "@/math";
 import type { BoundedGeometry, Dimension, PointLike } from "@/geometry";
 import { Point, Relation } from "@/geometry";
 
@@ -73,5 +74,12 @@ export class Aabb implements BoundedGeometry, AabbLike {
 		} else {
 			return Relation.Disjoint;
 		}
+	}
+
+	closest(p: DeepReadonly<PointLike>): Point {
+		return Point.point(
+			clamp(p.x, this.min.x, this.max.x),
+			clamp(p.y, this.min.y, this.max.y),
+		);
 	}
 }

@@ -61,7 +61,7 @@ export class Polygon implements BoundedGeometry, PolygonLike {
 
 			if (new Segment({ start: vi, end: vj }).relation(p) === Relation.Intersects) {
 				return true;
-			};
+			}
 
 			const intersects = Math.min(vi.y, vj.y) <= p.y && p.y < Math.max(vi.y, vj.y)
 				&& p.x < vi.x + (p.y - vi.y) / (vj.y - vi.y) * (vj.x - vi.x);
@@ -74,12 +74,24 @@ export class Polygon implements BoundedGeometry, PolygonLike {
 		return inside;
 	}
 
+	#edges(): Segment[] {
+		const n = this.vertices.length;
+		const edges: Segment[] = [];
+		for (let i = 0; i < n; i++) {
+			edges.push(new Segment({
+				start: this.vertices[i],
+				end: this.vertices[(i + 1) % n],
+			}));
+		}
+		return edges;
+	}
+
 	get dimension(): Dimension {
 		if (this.vertices.length < 2) {
 			return 0;
 		}
 
-		if (this.vertices.every(v => v.relation(this.vertices[0]) === Relation.Intersects)) {
+		if (this.vertices.every(v => v.relation(this.vertices[0]) !== Relation.Disjoint)) {
 			return 0;
 		}
 
@@ -99,5 +111,39 @@ export class Polygon implements BoundedGeometry, PolygonLike {
 
 		// 射线法
 		return this.#intersects(p) ? Relation.Intersects : Relation.Disjoint;
+	}
+
+	closest(p: DeepReadonly<PointLike>): Point {
+		const d = this.dimension;
+
+		// 退化为点
+		if (d === 0) {
+			return new Point(this.vertices[0]);
+		}
+
+		// 退化为线段
+		if (d === 1) {
+			return this.degenerate_segment().closest(p);
+		}
+
+		if (this.relation(p) !== Relation.Disjoint) {
+			return new Point(p);
+		}
+
+		// 取每条边最近点
+		const edges = this.#edges();
+		let best = edges[0].closest(p);
+		let best_sq = Point.distance_sq(best, p);
+
+		for (let i = 1; i < edges.length; i++) {
+			const c = edges[i].closest(p);
+			const sq = Point.distance_sq(c, p);
+			if (sq < best_sq) {
+				best_sq = sq;
+				best = c;
+			}
+		}
+
+		return best;
 	}
 }

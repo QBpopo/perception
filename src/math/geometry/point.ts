@@ -49,4 +49,8 @@ export class Point implements BoundedGeometry, PointLike {
 			return Relation.Disjoint;
 		}
 	}
+
+	closest(_p: Point): Point {
+		return Point.point(this.x, this.y);
+	}
 }
