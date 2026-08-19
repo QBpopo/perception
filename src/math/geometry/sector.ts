@@ -35,13 +35,13 @@ export class Sector implements BoundedGeometry, SectorLike {
 
 	get left_endpoint(): Point {
 		const half = this.angle / 2;
-		const left = Vec.rotate(this.direction, half);
+		const left = Vec.rotate(this.direction, -half);
 		return Point.offset(this.center, left, this.#radius);
 	}
 
 	get right_endpoint(): Point {
 		const half = this.angle / 2;
-		const right = Vec.rotate(this.direction, -half);
+		const right = Vec.rotate(this.direction, +half);
 		return Point.offset(this.center, right, this.#radius);
 	}
 
