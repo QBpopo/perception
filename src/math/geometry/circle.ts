@@ -1,6 +1,6 @@
 import type { DeepReadonly, Values } from "@/types";
-import type { BoundedGeometry } from "@/geometry";
-import { Point } from "@/geometry";
+import type { BoundedGeometry, PointLike } from "@/geometry";
+import { Point, Relation } from "@/geometry";
 
 export interface CircleLike {
 	center: Point;
@@ -56,6 +56,12 @@ export class Circle implements BoundedGeometry, CircleLike {
 
 	get dimension(): 0 | 2 {
 		return this.radius === 0 ? 0 : 2;
+	}
+
+	relation(p: DeepReadonly<PointLike>): Relation {
+		const d_sq = Point.distance_sq(this.center, p);
+		const r_sq = this.radius ** 2;
+		return d_sq <= r_sq ? Relation.Intersects : Relation.Disjoint;
 	}
 }
 

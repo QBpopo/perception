@@ -1,7 +1,8 @@
+import type { DeepReadonly } from "@/types";
 import { TWO_PI, clamp } from "@/math";
 import * as Vec from "@/math/vector";
-import type { BoundedGeometry, Dimension } from "@/geometry";
-import { Point } from "@/geometry";
+import type { BoundedGeometry, Dimension, PointLike } from "@/geometry";
+import { Point, Relation } from "@/geometry";
 
 export interface SectorLike {
 	center: Point;
@@ -64,5 +65,25 @@ export class Sector implements BoundedGeometry, SectorLike {
 			return 1;
 		}
 		return 2;
+	}
+
+	relation(p: DeepReadonly<PointLike>): Relation {
+		const cp = Vec.dir(this.center, p);
+
+		if (Vec.len_sq(cp) > this.radius ** 2) {
+			return Relation.Disjoint;
+		}
+
+		if (Vec.is_zero(cp)) {
+			return Relation.Intersects;
+		}
+
+		if (Vec.is_zero(this.direction)) {
+			return Relation.Disjoint;
+		}
+
+		const half = this.angle / 2;
+		const cos_half = Math.cos(half);
+		return Vec.cos_theta(cp, this.direction) >= cos_half ? Relation.Intersects : Relation.Disjoint;
 	}
 }

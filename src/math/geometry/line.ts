@@ -1,6 +1,7 @@
+import type { DeepReadonly } from "@/types";
 import * as Vec from "@/math/vector";
-import type { Geometry } from "@/geometry";
-import { Point } from "@/geometry";
+import type { Geometry, PointLike } from "@/geometry";
+import { Point, Relation } from "@/geometry";
 
 export interface LineLike {
 	origin: Point; // 直线上任一点
@@ -20,5 +21,18 @@ export class Line implements Geometry, LineLike {
 
 	get dimension(): 0 | 1 {
 		return Vec.is_zero(this.direction) ? 0 : 1;
+	}
+
+	relation(p: DeepReadonly<PointLike>): Relation {
+		if (this.dimension === 0) {
+			return this.origin.relation(p);
+		}
+
+		const op = Vec.dir(this.origin, p);
+		if (Vec.is_collinear(this.direction, op)) {
+			return Relation.Intersects;
+		} else {
+			return Relation.Disjoint;
+		}
 	}
 }

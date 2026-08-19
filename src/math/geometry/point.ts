@@ -1,6 +1,7 @@
 import type { DeepReadonly } from "@/types";
 import type { Vec2 } from "@/math/vector";
 import type { BoundedGeometry } from "@/geometry";
+import { Relation } from "@/geometry";
 
 export interface PointLike {
 	x: number;
@@ -39,5 +40,13 @@ export class Point implements BoundedGeometry, PointLike {
 
 	get dimension(): 0 {
 		return 0;
+	}
+
+	relation(p: DeepReadonly<PointLike>): Relation {
+		if (this.x === p.x && this.y === p.y) {
+			return Relation.Intersects;
+		} else {
+			return Relation.Disjoint;
+		}
 	}
 }

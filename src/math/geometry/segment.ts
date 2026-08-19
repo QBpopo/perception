@@ -1,5 +1,7 @@
-import type { BoundedGeometry } from "@/geometry";
-import { Point } from "@/geometry";
+import type { DeepReadonly } from "@/types";
+import type { BoundedGeometry, PointLike } from "@/geometry";
+import * as Vec from "@/math/vector";
+import { Point, Relation } from "@/geometry";
 
 export interface SegmentLike {
 	start: Point;
@@ -30,5 +32,21 @@ export class Segment implements BoundedGeometry, SegmentLike {
 
 	get dimension(): 0 | 1 {
 		return this.start.x === this.end.x && this.start.y === this.end.y ? 0 : 1;
+	}
+
+	relation(p: DeepReadonly<PointLike>): Relation {
+		const se = Vec.dir(this.start, this.end);
+		const sp = Vec.dir(this.start, p);
+
+		if (this.dimension === 0) {
+			return this.start.relation(p);
+		}
+
+		if (!Vec.is_collinear(sp, se)) {
+			return Relation.Disjoint;
+		}
+
+		const t = Vec.proj_factor(sp, se);
+		return 0 <= t && t <= 1 ? Relation.Intersects : Relation.Disjoint;
 	}
 }

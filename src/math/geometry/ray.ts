@@ -1,6 +1,7 @@
+import type { DeepReadonly } from "@/types";
 import * as Vec from "@/math/vector";
-import type { Geometry } from "@/geometry";
-import { Point } from "@/geometry";
+import type { Geometry, PointLike } from "@/geometry";
+import { Point, Relation } from "@/geometry";
 
 export interface RayLike {
 	origin: Point; // 射线起点
@@ -20,5 +21,17 @@ export class Ray implements Geometry, RayLike {
 
 	get dimension(): 0 | 1 {
 		return Vec.is_zero(this.direction) ? 0 : 1;
+	}
+
+	relation(p: DeepReadonly<PointLike>): Relation {
+		if (this.dimension === 0) {
+			return this.origin.relation(p);
+		}
+
+		if (Vec.is_same_dir(this.direction, Vec.dir(this.origin, p))) {
+			return Relation.Intersects;
+		} else {
+			return Relation.Disjoint;
+		}
 	}
 }

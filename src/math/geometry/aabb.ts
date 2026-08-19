@@ -1,5 +1,6 @@
-import type { BoundedGeometry, Dimension } from "@/geometry";
-import { Point } from "@/geometry";
+import type { DeepReadonly } from "@/types";
+import type { BoundedGeometry, Dimension, PointLike } from "@/geometry";
+import { Point, Relation } from "@/geometry";
 
 export interface AabbLike {
 	min: Point;
@@ -64,5 +65,13 @@ export class Aabb implements BoundedGeometry, AabbLike {
 			return 1;
 		}
 		return 2;
+	}
+
+	relation(p: DeepReadonly<PointLike>): Relation {
+		if (this.min.x <= p.x && p.x <= this.max.x && this.min.y <= p.y && p.y <= this.max.y) {
+			return Relation.Intersects;
+		} else {
+			return Relation.Disjoint;
+		}
 	}
 }
