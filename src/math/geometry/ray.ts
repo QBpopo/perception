@@ -40,4 +40,8 @@ export class Ray implements Geometry, RayLike {
 		const t = Math.max(0, Vec.proj_factor(op, this.direction));
 		return Point.offset(this.origin, this.direction, t);
 	}
+
+	non_smooth(): Iterable<Point> {
+		return [new Point(this.origin)];
+	}
 }

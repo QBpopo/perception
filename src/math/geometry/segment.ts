@@ -57,4 +57,11 @@ export class Segment implements BoundedGeometry, SegmentLike {
 		const t = clamp(Vec.proj_factor(sp, se), 0, 1);
 		return Point.offset(this.start, se, t);
 	}
+
+	non_smooth(): Iterable<Point> {
+		return [
+			new Point(this.start),
+			new Point(this.end),
+		];
+	}
 }

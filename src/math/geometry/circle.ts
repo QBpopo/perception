@@ -77,6 +77,10 @@ export class Circle implements BoundedGeometry, CircleLike {
 		// 在圆外，沿圆心到点方向偏移半径
 		return Point.offset(this.center, Vec.scale(cp, d), this.radius);
 	}
+
+	non_smooth(): Iterable<Point> {
+		return [];
+	}
 }
 
 export type CircleRelation = Values<typeof CircleRelation>;

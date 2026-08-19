@@ -19,6 +19,9 @@ export interface Geometry {
 
 	// geometry 上与该点最近的点
 	closest(p: DeepReadonly<PointLike>): Point;
+
+	// geometry 上所有不光滑的点
+	non_smooth(): Iterable<Point>;
 }
 
 export interface BoundedGeometry extends Geometry { }

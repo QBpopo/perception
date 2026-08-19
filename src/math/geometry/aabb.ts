@@ -82,4 +82,13 @@ export class Aabb implements BoundedGeometry, AabbLike {
 			clamp(p.y, this.min.y, this.max.y),
 		);
 	}
+
+	non_smooth(): Iterable<Point> {
+		return [
+			Point.point(this.min.x, this.min.y),
+			Point.point(this.min.x, this.max.y),
+			Point.point(this.max.x, this.min.y),
+			Point.point(this.max.x, this.max.y),
+		];
+	}
 }

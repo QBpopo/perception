@@ -118,4 +118,12 @@ export class Sector implements BoundedGeometry, SectorLike {
 			return right_closest;
 		}
 	}
+
+	non_smooth(): Iterable<Point> {
+		return [
+			new Point(this.center),
+			new Point(this.left_endpoint),
+			new Point(this.right_endpoint),
+		];
+	}
 }

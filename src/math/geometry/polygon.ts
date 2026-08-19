@@ -146,4 +146,8 @@ export class Polygon implements BoundedGeometry, PolygonLike {
 
 		return best;
 	}
+
+	non_smooth(): Iterable<Point> {
+		return this.vertices.map(v => new Point(v));
+	}
 }

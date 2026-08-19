@@ -41,4 +41,8 @@ export class Line implements Geometry, LineLike {
 		const t = Vec.proj_factor(op, this.direction);
 		return Point.offset(this.origin, this.direction, t);
 	}
+
+	non_smooth(): Iterable<Point> {
+		return [];
+	}
 }

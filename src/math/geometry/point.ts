@@ -53,4 +53,8 @@ export class Point implements BoundedGeometry, PointLike {
 	closest(_p: Point): Point {
 		return Point.point(this.x, this.y);
 	}
+
+	non_smooth(): Iterable<Point> {
+		return [new Point(this)];
+	}
 }
