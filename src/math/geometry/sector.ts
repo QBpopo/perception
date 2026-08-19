@@ -25,24 +25,32 @@ export class Sector implements BoundedGeometry, SectorLike {
 		if (direction !== undefined) this.direction = Vec.Vec2(direction);
 	}
 
-	get radius(): number { return this.#radius; }
+	get radius(): number {
+		return this.#radius;
+	}
 
-	set radius(r: number) { this.#radius = Math.max(0, r); }
+	set radius(r: number) {
+		this.#radius = Math.max(0, r);
+	}
 
-	get angle(): number { return this.#angle; }
+	get angle(): number {
+		return this.#angle;
+	}
 
-	set angle(a: number) { this.#angle = clamp(a, 0, TWO_PI); }
+	set angle(a: number) {
+		this.#angle = clamp(a, 0, TWO_PI);
+	}
 
 	get left_endpoint(): Point {
 		const half = this.angle / 2;
 		const left = Vec.rotate(this.direction, -half);
-		return Point.offset(this.center, left, this.#radius);
+		return Point.offset(this.center, left, this.radius);
 	}
 
 	get right_endpoint(): Point {
 		const half = this.angle / 2;
 		const right = Vec.rotate(this.direction, +half);
-		return Point.offset(this.center, right, this.#radius);
+		return Point.offset(this.center, right, this.radius);
 	}
 
 	get dimension(): Dimension {

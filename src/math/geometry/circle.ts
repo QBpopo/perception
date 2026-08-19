@@ -55,7 +55,7 @@ export class Circle implements BoundedGeometry, CircleLike {
 	};
 
 	get dimension(): Dimension {
-		return this.#radius === 0 ? 0 : 2;
+		return this.radius === 0 ? 0 : 2;
 	}
 }
 
