@@ -1,4 +1,4 @@
-import type { BoundedGeometry } from "@/geometry";
+import type { BoundedGeometry, Dimension } from "@/geometry";
 import { Point } from "@/geometry";
 
 export interface AabbLike {
@@ -48,5 +48,18 @@ export class Aabb implements BoundedGeometry, AabbLike {
 
 	get height(): number {
 		return this.max.y - this.min.y;
+	}
+
+	get dimension(): Dimension {
+		const w = this.width;
+		const h = this.height;
+
+		if (w === 0 && h === 0) {
+			return 0;
+		}
+		if (w === 0 || h === 0) {
+			return 1;
+		}
+		return 2;
 	}
 }

@@ -1,5 +1,5 @@
 import * as Vec from "@/math/vector";
-import type { BoundedGeometry } from "@/geometry";
+import type { BoundedGeometry, Dimension } from "@/geometry";
 import { Point } from "@/geometry";
 
 export interface PolygonLike {
@@ -24,5 +24,19 @@ export class Polygon implements BoundedGeometry, PolygonLike {
 			sum += Vec.cross(a, b);
 		}
 		return sum / 2;
+	}
+
+	get dimension(): Dimension {
+		const n = this.vertices.length;
+		if (n < 2) {
+			return 0;
+		}
+
+		const v0 = this.vertices[0];
+		if (this.vertices.every(v => v.x === v0.x && v.y === v0.y)) {
+			return 0;
+		}
+
+		return this.signed_area() === 0 ? 1 : 2;
 	}
 }

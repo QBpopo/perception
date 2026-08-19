@@ -1,6 +1,6 @@
 import type { DeepReadonly } from "@/types";
 import type { Vec2 } from "@/math/vector";
-import type { BoundedGeometry } from "@/geometry";
+import type { BoundedGeometry, Dimension } from "@/geometry";
 
 export interface PointLike {
 	x: number;
@@ -36,4 +36,8 @@ export class Point implements BoundedGeometry, PointLike {
 	static offset = (o: DeepReadonly<Point>, dir: DeepReadonly<Vec2>, t: number): Point => {
 		return Point.point(o.x + t * dir.x, o.y + t * dir.y);
 	};
+
+	get dimension(): Dimension {
+		return 0;
+	}
 }

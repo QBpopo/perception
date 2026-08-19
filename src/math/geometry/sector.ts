@@ -1,6 +1,6 @@
 import { TWO_PI, clamp } from "@/math";
 import * as Vec from "@/math/vector";
-import type { BoundedGeometry } from "@/geometry";
+import type { BoundedGeometry, Dimension } from "@/geometry";
 import { Point } from "@/geometry";
 
 export interface SectorLike {
@@ -43,5 +43,12 @@ export class Sector implements BoundedGeometry, SectorLike {
 		const half = this.angle / 2;
 		const right = Vec.rotate(this.direction, -half);
 		return Point.offset(this.center, right, this.#radius);
+	}
+
+	get dimension(): Dimension {
+		if (this.radius === 0) {
+			return 0;
+		}
+		return this.angle === 0 ? 1 : 2;
 	}
 }

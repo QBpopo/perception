@@ -1,4 +1,4 @@
-import type { BoundedGeometry } from "@/geometry";
+import type { BoundedGeometry, Dimension } from "@/geometry";
 import { Point } from "@/geometry";
 
 export interface SegmentLike {
@@ -26,5 +26,9 @@ export class Segment implements BoundedGeometry, SegmentLike {
 			(this.start.x + this.end.x) / 2,
 			(this.start.y + this.end.y) / 2,
 		);
+	}
+
+	get dimension(): Dimension {
+		return this.start.x === this.end.x && this.start.y === this.end.y ? 0 : 1;
 	}
 }
