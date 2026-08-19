@@ -14,7 +14,7 @@ export class Polygon implements BoundedGeometry, PolygonLike {
 		this.vertices = polygon.vertices.map(v => new Point(v));
 	}
 
-	static from_points = (ps: Point[]) => new Polygon({ vertices: ps });
+	static from_points = (ps: DeepReadonly<PointLike[]>) => new Polygon({ vertices: ps.map(v => new Point(v)) });
 
 	signed_area(): number {
 		const n = this.vertices.length;

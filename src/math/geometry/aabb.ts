@@ -23,7 +23,7 @@ export class Aabb implements BoundedGeometry, AabbLike {
 		}
 	}
 
-	static from_points = (ps: Iterable<Point>): Aabb => {
+	static from_points = (ps: DeepReadonly<Iterable<PointLike>>): Aabb => {
 		const it = ps[Symbol.iterator]();
 
 		const first = it.next();
