@@ -67,11 +67,13 @@ export const dot = (u: DeepReadonly<Vec2>, v: DeepReadonly<Vec2>): number => u.x
 
 export const cross = (u: DeepReadonly<Vec2>, v: DeepReadonly<Vec2>): number => u.x * v.y - u.y * v.x;
 
+// 零向量与任意向量共线，返回 `true`
 export const is_collinear = (u: DeepReadonly<Vec2>, v: DeepReadonly<Vec2>): boolean => cross(u, v) === 0;
 
+// 零向量的方向为任意方向，返回 `false`
 export const is_same_dir = (u: DeepReadonly<Vec2>, v: DeepReadonly<Vec2>): boolean => is_collinear(u, v) && dot(u, v) > 0;
 
-// 向量 u 在向量 v 上的投影系数
+// 向量 u 在向量 v 上的投影系数，零向量返回 `0`
 export const proj_factor = (u: DeepReadonly<Vec2>, v: DeepReadonly<Vec2>): number => {
 	const _len_sq = len_sq(v);
 
@@ -82,9 +84,9 @@ export const proj_factor = (u: DeepReadonly<Vec2>, v: DeepReadonly<Vec2>): numbe
 	return dot(u, v) / _len_sq;
 };
 
-// 向量 u 在向量 v 上的投影向量
+// 向量 u 在向量 v 上的投影向量，零向量返回零向量
 export const proj = (u: DeepReadonly<Vec2>, v: DeepReadonly<Vec2>): Vec2 => {
-	const t = proj_factor(u, v) ?? 0;
+	const t = proj_factor(u, v);
 	return scale(v, t);
 };
 
