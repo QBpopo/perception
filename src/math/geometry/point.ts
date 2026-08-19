@@ -33,7 +33,7 @@ export class Point implements BoundedGeometry, PointLike {
 		return dx * dx + dy * dy;
 	};
 
-	static offset = (o: DeepReadonly<Point>, dir: DeepReadonly<Vec2>, t: number): Point => {
+	static offset = (o: DeepReadonly<PointLike>, dir: DeepReadonly<Vec2>, t: number): Point => {
 		return Point.point(o.x + t * dir.x, o.y + t * dir.y);
 	};
 
