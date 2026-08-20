@@ -55,7 +55,7 @@ export const set_object_id = (v: number): void => {
 
 export const create_pc = (x: number, y: number): Pc => ({
 	id: 0,
-	speed: 240,
+	speed: 200,
 	crosshair_dir: Vec.vec2(1, 0),
 	vision_angle: (Math.PI / 180) * 90,
 	vision_distance: 960,

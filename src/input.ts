@@ -20,6 +20,14 @@ export const input_ctx = (): InputCtx => {
 	let is_draged = false;
 	const keys = new Set<string>();
 
+	// 游戏按键，禁用浏览器默认行为
+	const GAME_KEYS = [
+		"KeyW", "KeyA", "KeyS", "KeyD",
+		"ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
+		"ShiftLeft", "ShiftRight", "ControlLeft", "ControlRight", "AltLeft", "AltRight",
+		"Space",
+	];
+
 	window.addEventListener("keydown", e => {
 		// 输入框聚焦时不记录游戏按键
 		const target = e.target;
@@ -29,8 +37,7 @@ export const input_ctx = (): InputCtx => {
 
 		keys.add(e.code);
 
-		// 阻止方向键滚动
-		if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space"].includes(e.code)) {
+		if (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey || GAME_KEYS.includes(e.code)) {
 			e.preventDefault();
 		}
 	});
