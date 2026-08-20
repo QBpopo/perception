@@ -5,6 +5,9 @@ export const clamp = (value: number, min: number, max: number): number => Math.m
 
 export const lerp = (a: number, b: number, t: number): number => a + (b - a) * t;
 
+export const exp_smooth = (current: number, target: number, rate: number, dt: number): number =>
+	lerp(current, target, 1 - Math.exp(-rate * dt));
+
 export const radian = (degree: number): number => degree * (Math.PI / 180);
 
 export const degree = (radian: number): number => radian * (180 / Math.PI);
