@@ -61,25 +61,26 @@ export const input_ctx = (): InputCtx => {
 	});
 
 	window.addEventListener("pointerdown", e => {
-		if (e.button !== 1) return;
+		if (e.button === 0) {
+			lmb = true;
+		}
+		if (e.button === 1) {
+			mmb = true;
+		}
+	});
+
+	window.addEventListener("pointerup", e => {
+		if (e.button === 0) {
+			lmb = false;
+			is_draged = false;
+		}
+		if (e.button === 1) {
+			mmb = false;
+		}
+	});
+
+	window.addEventListener("contextmenu", e => {
 		e.preventDefault();
-		mmb = true;
-	});
-
-	window.addEventListener("pointerup", e => {
-		if (e.button !== 1) return;
-		mmb = false;
-	});
-
-	window.addEventListener("pointerdown", e => {
-		if (e.button !== 0) return;
-		lmb = true;
-	});
-
-	window.addEventListener("pointerup", e => {
-		if (e.button !== 0) return;
-		lmb = false;
-		is_draged = false;
 	});
 
 	const wasd_axis = (): Vec2 => {

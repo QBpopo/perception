@@ -63,10 +63,10 @@ let enable_crosshair = true;
 renderer.app.ticker.add(ticker => {
 	const dt = Math.min(ticker.deltaMS / 1000, 0.05);
 
-	// Shift 疾跑，Alt 潜行
-	// 原本是想要以 Ctrl 潜行，但浏览器上某些快捷键组合无法通过 JS 禁用，其中包括关闭标签页的 Ctrl + W
+	// Shift 疾跑，Space 潜行
+	// 原本是想要以 Ctrl 潜行，但浏览器上某些快捷键无法通过 JS 禁用，其中包括关闭标签页的 Ctrl + W
 	const sprint = input.is_key_down("ShiftLeft");
-	const sneak = input.is_key_down("AltLeft");
+	const sneak = input.is_key_down("Space");
 
 	// 潜行时
 	const vision_angle_target = sneak ? VISION_ANGLE_BASE * SNEAK_VISION_BOOST : VISION_ANGLE_BASE;
